@@ -12,10 +12,19 @@ export class UserComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.user = {
+    // with snapshot if you load another user from UserComponent it doesnt refresh
+    /* this.user = {
       id: this.route.snapshot.params['id'],
       name: this.route.snapshot.params['name']
-    }
+    } */
+
+    // we need to subscribe for always looking for changes on route
+    this.route.params.subscribe(param => {
+      this.user = {
+        id: param.id,
+        name: param.name
+      }
+    })
   }
 
 }
