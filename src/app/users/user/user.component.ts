@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -19,10 +19,10 @@ export class UserComponent implements OnInit {
     } */
 
     // we need to subscribe for always looking for changes on route
-    this.route.params.subscribe(param => {
+    this.route.params.subscribe((params: Params) => {
       this.user = {
-        id: param.id,
-        name: param.name
+        id: params['id'],
+        name: params['name']
       }
     })
   }
