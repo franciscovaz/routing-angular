@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
   user: {id: number, name: string};
+  paramsSubscription: Subscription
 
   constructor(private route: ActivatedRoute) { }
 
@@ -20,10 +22,15 @@ export class UserComponent implements OnInit {
     }
 
     // we need to subscribe for always looking for changes on route
-    this.route.params.subscribe((params: Params) => {
+    this.paramsSubscription = this.route.params.subscribe((params: Params) => {
       this.user.id = params['id'];
       this.user.name = params['name'];
     })
+  }
+
+  // Angular does this beind the scenes, but for our obserbables we need to implement it
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 
 }
