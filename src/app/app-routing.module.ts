@@ -12,6 +12,7 @@ import { ServerComponent } from "./servers/server/server.component";
 import { ServersComponent } from "./servers/servers.component";
 import { UserComponent } from "./users/user/user.component";
 import { UsersComponent } from "./users/users.component";
+import { ServerResolver } from "./servers/server/server-resolver.service";
 
 // ** wildcard to all other routes after defined
 // redirectTo at the end because validate others first
@@ -26,7 +27,8 @@ const appRoutes: Routes = [
     canActivateChild:[AuthGuard],
     component: ServersComponent,
     children: [
-      { path: ':id', component: ServerComponent },
+      { path: ':id', component: ServerComponent,
+      resolve: {server: ServerResolver} },
       { path: ':id/edit', component: EditServerComponent,
       canDeactivate: [CanDeactivateGuard] }
   ] },
